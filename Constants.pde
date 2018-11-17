@@ -3,11 +3,11 @@ class Constants {
   final static float SAT_ALT = 550;
   final static float SAT_RADIUS = EARTH_RADIUS + SAT_ALT;
   final static float SAT_PERIOD = 1.59171; // Hrs
-  final static float TIME_SCALE = 1.0; // frameCount * TIME_SCALE = hrs passed.
+  final static float TIME_SCALE = 0.01; // frameCount * TIME_SCALE = hrs passed.
   final static float GLOBE_ROTATE_PER_TICK = (360.0 / (24 * 60)) * TIME_SCALE;
   final static float SAT_ROTATE_PER_TICK = (360.0 / (SAT_PERIOD * 60)) * TIME_SCALE;
-  final static float SCALE = .02f;
+  final static float SCALE = .04f;
   final static int SAT_PLANES = 24;
   final static int SATS_PER_PLANE = 66;
-  //final float ORBITAL_OFFSET = (4 / SAT_PLANES);
+  final static float ORBITAL_OFFSET = (4 / SAT_PLANES);
 }
