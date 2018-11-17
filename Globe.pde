@@ -14,7 +14,7 @@ class Globe {
     /*
     * Rotate the earth and draw
      */
-    rotateY(radians(frameCount * 0.01f));
+    rotateY(radians(frameCount * Constants.GLOBE_ROTATE_PER_TICK));
     shape(globe);
 
     // Loop through the cities and place them on the globe with circles
@@ -26,7 +26,7 @@ class Globe {
     popMatrix();
   }
 
-  void addCity(float lng, float lat, color c) {
-    cities.add(new City(lng, lat, c));
+  void addCity(float lng, float lat, color c, String name) {
+    cities.add(new City(lng, lat, c, name));
   }
 }

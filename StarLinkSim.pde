@@ -15,7 +15,10 @@ void setup() {
   frameRate(24); // Lock Framerate
   cam = new PeasyCam(this, 0, 0, 0, 1000);
   globe.init();
-  globe.addCity(0,0, color(255,0,0));
+  globe.addCity(0,0, color(255,0,0), "0,0");
+  globe.addCity(40.7, -74, color(0,128,128), "NY");
+  
+  
 }
 
 void draw() {
