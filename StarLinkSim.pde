@@ -26,4 +26,5 @@ void draw() {
   background(0);
   globe.drawGlobe();
   orbits.drawSatellites();
+  orbits.drawSatelliteLinks();
 }
