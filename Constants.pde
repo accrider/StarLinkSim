@@ -1,6 +1,7 @@
 class Constants {
   final static float EARTH_RADIUS = 6371;
   final static float SAT_ALT = 550;
+  final static float SAT_ANTENNA_DIST = 1200;
   final static float SAT_RADIUS = EARTH_RADIUS + SAT_ALT;
   final static float SAT_PERIOD = 1.59171; // Hrs
   final static float TIME_SCALE = 0.01; // frameCount * TIME_SCALE = hrs passed.

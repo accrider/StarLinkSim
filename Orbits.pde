@@ -24,13 +24,17 @@ class Orbits {
       int plane = orbitalPlane.getKey();
       ArrayList<Satellite> sats = orbitalPlane.getValue();
       for (Satellite sat : sats) {
-        sat.neighbors.add(findSat(satellites.get(((plane + Constants.SAT_PLANES) - 1) % Constants.SAT_PLANES), ((sat.satelliteSequence + Constants.SATS_PER_PLANE + 1) % Constants.SATS_PER_PLANE)));
+        sat.neighbors.add(findSat(satellites.get(((plane + Constants.SAT_PLANES) - 1) % Constants.SAT_PLANES), ((sat.satelliteSequence + Constants.SATS_PER_PLANE - 1) % Constants.SATS_PER_PLANE)));
         sat.neighbors.add(findSat(satellites.get(((plane + Constants.SAT_PLANES) + 1) % Constants.SAT_PLANES), ((sat.satelliteSequence + Constants.SATS_PER_PLANE + 1) % Constants.SATS_PER_PLANE)));
         sat.neighbors.add(findSat(satellites.get(((plane + Constants.SAT_PLANES)) % Constants.SAT_PLANES), ((sat.satelliteSequence + Constants.SATS_PER_PLANE - 1) % Constants.SATS_PER_PLANE)));
-        sat.neighbors.add(findSat(satellites.get(((plane + Constants.SAT_PLANES)) % Constants.SAT_PLANES), ((sat.satelliteSequence + Constants.SATS_PER_PLANE - 1) % Constants.SATS_PER_PLANE)));
+        sat.neighbors.add(findSat(satellites.get(((plane + Constants.SAT_PLANES)) % Constants.SAT_PLANES), ((sat.satelliteSequence + Constants.SATS_PER_PLANE + 1) % Constants.SATS_PER_PLANE)));
       }
     }
     println("Done associating neighboring sats");
+  }
+  
+  int getSatelliteCount() {
+    return Constants.SAT_PLANES * Constants.SATS_PER_PLANE;
   }
 
   Satellite findSat(ArrayList<Satellite> sats, int seqNum) {
@@ -72,6 +76,23 @@ class Orbits {
     }
     popMatrix();
   }
+  void connectCities(ArrayList<City> cities) {
+    for (Map.Entry<Integer, ArrayList<Satellite>> orbitalPlane : satellites.entrySet()) {
+      ArrayList<Satellite> sats = orbitalPlane.getValue();
+      for (Satellite sat : sats) {
+        sat.connectedCities.clear();
+        for (City c : cities) {
+          if (c.currentLocation.dist(sat.currentLocation) < Constants.SAT_ANTENNA_DIST * Constants.SCALE) {
+            //println(degrees(PVector.angleBetween(sat.currentLocation, c.currentLocation)));
+            sat.connectedCities.add(c);
+            c.connectedSats.add(sat);
+            stroke(255,0,0);
+            line(c.currentLocation.x, c.currentLocation.y, c.currentLocation.z, sat.currentLocation.x, sat.currentLocation.y, sat.currentLocation.z);
+          }
+        }
+      }
+    }
+  }
   void drawSatelliteLinks() {
     for (Map.Entry<Integer, ArrayList<Satellite>> orbitalPlane : satellites.entrySet()) {
       ArrayList<Satellite> sats = orbitalPlane.getValue();
@@ -88,5 +109,6 @@ class Orbits {
 class Satellite {
   int satelliteSequence;
   ArrayList<Satellite> neighbors = new ArrayList<Satellite>();
+  ArrayList<City> connectedCities = new ArrayList<City>();
   PVector currentLocation;
 }
