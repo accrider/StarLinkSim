@@ -20,12 +20,13 @@ class Globe {
     return null;
   }
 
+  // Uses path finding to get the path between two cities, returns total distance.
   float connectCities(City start, City end) {
 
-    Queue<QueueItem> queue = new ArrayDeque<QueueItem>();
+    Queue<QueueItem> queue = new PriorityQueue<QueueItem>(new QueueItemComp());
     Set<Satellite> closedSet = new HashSet<Satellite>();
     for (Satellite s : start.connectedSats) {
-      queue.add(new QueueItem(s, start));
+      queue.add(new QueueItem(s, start, s.currentLocation.dist(start.currentLocation)));
     }
     //queue.addAll(start.connectedSats);
     QueueItem finalQueue = null;
@@ -35,11 +36,11 @@ class Globe {
       closedSet.add(s.cur);
       for (Satellite n : s.cur.neighbors) {
         if (n.connectedCities.contains(end)) {
-          finalQueue = new QueueItem(n, s);
+          finalQueue = new QueueItem(n, s, s.dist + n.currentLocation.dist(s.cur.currentLocation));
           found = true;
         }
         if (!closedSet.contains(n)) {
-          queue.add(new QueueItem(n, s));
+          queue.add(new QueueItem(n, s, s.dist + n.currentLocation.dist(s.cur.currentLocation)));
         }
       }
     }
@@ -83,5 +84,15 @@ class Globe {
 
   void addCity(float lng, float lat, color c, String name) {
     cities.add(new City(lng, lat, c, name));
+  }
+}
+
+class QueueItemComp implements Comparator<QueueItem> {
+  public int compare(QueueItem itm1, QueueItem itm2) {
+    if (itm1.dist > itm2.dist) {
+      return 1;
+    } else {
+      return -1;
+    }
   }
 }

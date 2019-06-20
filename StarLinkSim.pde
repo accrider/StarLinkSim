@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.ArrayDeque;
 import java.util.PriorityQueue;
+import java.util.Comparator;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
@@ -55,15 +56,15 @@ class QueueItem {
   City prevCity;
   Satellite cur;
   QueueItem prev;
-  QueueItem(Satellite s) {
-    cur = s;
-  }
-  QueueItem(Satellite s, QueueItem p) {
+  float dist;
+  QueueItem(Satellite s, QueueItem p, float dist) {
     cur = s;
     prev = p;
+    this.dist = dist;
   }
-  QueueItem(Satellite s, City c) {
+  QueueItem(Satellite s, City c, float dist) {
     prevCity = c;
     cur = s;
+    this.dist = dist;
   }
 }
